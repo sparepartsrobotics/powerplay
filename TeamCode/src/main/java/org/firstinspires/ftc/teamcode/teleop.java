@@ -9,12 +9,9 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DistanceSensor;
-import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
-
-import java.util.EventListenerProxy;
 
 
 @TeleOp (name = "Main TeleOp")
@@ -23,14 +20,14 @@ import java.util.EventListenerProxy;
 
 
 
-public class MainTeleOp extends LinearOpMode {
+public class teleop extends LinearOpMode {
 
     public volatile Robot robot;
 
 
 
     float joystickDeadzone = 0.05f;
-     auto;
+    auto auto;
 
 
     double flMotorPower;
