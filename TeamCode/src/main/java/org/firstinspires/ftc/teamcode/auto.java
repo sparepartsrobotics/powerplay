@@ -86,7 +86,7 @@ public class auto extends LinearOpMode {
     static final double WHEEL_DIAMETER_INCHES = 4.0;     // For figuring circumference
     static final double COUNTS_PER_INCH = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION) /
             (WHEEL_DIAMETER_INCHES * 3.1415);
-    static final double DRIVE_SPEED = 0.1;
+    static final double DRIVE_SPEED = 0.4;
     static final double degree_mult = 0.192;
 
     /*
@@ -129,7 +129,6 @@ public class auto extends LinearOpMode {
          **/
         if (tfod != null) {
             tfod.activate();
-
             // The TensorFlow software will scale the input images from the camera to a lower resolution.
             // This can result in lower detection accuracy at longer distances (> 55cm or 22").
             // If your target is at distance greater than 50 cm (20") you can increase the magnification value
@@ -173,12 +172,23 @@ public class auto extends LinearOpMode {
                             telemetry.addData("- Position (Row/Col)", "%.0f / %.0f", row, col);
                             telemetry.addData("- Size (Width/Height)", "%.0f / %.0f", width, height);
                             if (recognition.getLabel().equals("1 Bolt")) {
-                                forward(DRIVE_SPEED, 1, 5);
-                                forward(DRIVE_SPEED, 0, 15);
-                            }
-                            if (recognition.getLabel().equals("2 Bulb")) {
-                                isBulbDetected = true;
-                                telemetry.addData("Object Detection", "2 Bulb");
+                                tfod.deactivate();
+                                forward(DRIVE_SPEED,2,15);
+                                strafeLeft(DRIVE_SPEED, 30, 15);
+                                sleep(500);
+                                forward(DRIVE_SPEED, 30, 15);
+                                break;
+                            } if (recognition.getLabel().equals("2 Bulb")) {
+                                tfod.deactivate();
+                                forward(DRIVE_SPEED, 30, 15);
+                                break;
+                            } if (recognition.getLabel().equals("3 Panel")) {
+                                tfod.deactivate();
+                                forward(DRIVE_SPEED,2,15);
+                                strafeRight(DRIVE_SPEED, 30, 15);
+                                sleep(500);
+                                forward(DRIVE_SPEED, 30, 15);
+                                break;
                             } else {
                                 isBulbDetected = false;
                             }
@@ -226,7 +236,7 @@ public class auto extends LinearOpMode {
     }
 
     public void forward(double speed, double inch, double timeout) {
-        encoderDrive(speed, inch, inch, -inch, -inch, timeout);
+        encoderDrive(speed, -inch, -inch, -inch, -inch, timeout);
     }
 
     public void backward(double speed, double inch, double timeout) {
