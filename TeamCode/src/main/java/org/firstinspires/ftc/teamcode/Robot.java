@@ -15,6 +15,8 @@ public class Robot {
     public DcMotor frontLeft;
     public DcMotor rearRight;
     public DcMotor rearLeft;
+    public DcMotor leftSlideMotor;
+    public DcMotor rightSlideMotor;
 //    public DcMotor duckSpinner;
 //    public DcMotor intake;
 //    public DcMotor slide;
@@ -24,13 +26,12 @@ public class Robot {
 //    public Servo clawTilt;
 //    public DistanceSensor d1;
 //    public DistanceSensor d2;
-
-    //    public DcMotor flyLeft;
+//    public DcMotor flyLeft;
 //    public DcMotor flyRight;
 //    public DcMotor beltMotor;
 //    public DcMotor wobblerMotor;
 //
- //   public RevBlinkinLedDriver rgbDriver;
+//   public RevBlinkinLedDriver rgbDriver;
 //
 //    public Servo wobblerServo;
 //    public Servo stopServo;
@@ -49,6 +50,8 @@ public class Robot {
         frontRight = hardwareMap.dcMotor.get("rfWheel");
         rearLeft = hardwareMap.dcMotor.get("lrWheel");
         rearRight = hardwareMap.dcMotor.get("rrWheel");
+        leftSlideMotor = hardwareMap.dcMotor.get("leftSlideMotor");
+        rightSlideMotor = hardwareMap.dcMotor.get("rightSlideMotor");
   //      stopArmServo = hardwareMap.servo.get("stopArmServo");
   //      duckSpinner = hardwareMap.dcMotor.get("dSpin");
   //      intake = hardwareMap.dcMotor.get("intake");
@@ -74,6 +77,7 @@ public class Robot {
 
         frontLeft.setDirection(DcMotor.Direction.REVERSE);
         rearLeft.setDirection(DcMotor.Direction.REVERSE);
+        rightSlideMotor.setDirection(DcMotor.Direction.REVERSE);
 //        slide.setDirection(DcMotorSimple.Direction.REVERSE);
 //        flyRight.setDirection(DcMotor.Direction.REVERSE);
 //        beltMotor.setDirection(DcMotorSimple.Direction.REVERSE);

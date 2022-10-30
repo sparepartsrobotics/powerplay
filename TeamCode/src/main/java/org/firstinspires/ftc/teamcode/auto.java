@@ -173,7 +173,7 @@ public class auto extends LinearOpMode {
                             telemetry.addData("- Size (Width/Height)", "%.0f / %.0f", width, height);
                             if (recognition.getLabel().equals("1 Bolt")) {
                                 tfod.deactivate();
-                                forward(DRIVE_SPEED,2,15);
+                                forward(DRIVE_SPEED,3,15);
                                 strafeLeft(DRIVE_SPEED, 30, 15);
                                 sleep(500);
                                 forward(DRIVE_SPEED, 30, 15);
