@@ -17,6 +17,7 @@ public class Robot {
     public DcMotor rearLeft;
     public DcMotor leftSlideMotor;
     public DcMotor rightSlideMotor;
+    public Servo claw;
 //    public DcMotor duckSpinner;
 //    public DcMotor intake;
 //    public DcMotor slide;
@@ -52,6 +53,7 @@ public class Robot {
         rearRight = hardwareMap.dcMotor.get("rrWheel");
         leftSlideMotor = hardwareMap.dcMotor.get("leftSlideMotor");
         rightSlideMotor = hardwareMap.dcMotor.get("rightSlideMotor");
+        claw = hardwareMap.servo.get("claw");
   //      stopArmServo = hardwareMap.servo.get("stopArmServo");
   //      duckSpinner = hardwareMap.dcMotor.get("dSpin");
   //      intake = hardwareMap.dcMotor.get("intake");
