@@ -11,8 +11,6 @@ public class teleop extends LinearOpMode {
 
     public volatile Robot robot;
 
-    float joystickDeadzone = 0.05f;
-
     double flMotorPower;
     double frMotorPower;
     double brMotorPower;
@@ -23,22 +21,30 @@ public class teleop extends LinearOpMode {
     double joystick1RightX;
     double joystick1LeftY;
 
-    boolean toggleVariableSpeed = false;
-
-    int highJunction = 750;
+    int highJunction = 775;
     int mediumJunction = 550;
     int lowJunction = 350;
     int groundJunction = 100;
+
     int neutralPosition = 0;
-    int higherConePosition = 150;
-    int lowerConePosition = 100;
+
+    int conePosition5 = 150;
+    int conePosition4 = 115;
+    int conePosition3 = 90;
+    int conePosition2 = 65;
 
     @Override
     public void runOpMode() throws InterruptedException {
 
         robot = new Robot(hardwareMap);
 
-        robot.claw.setPosition(0.5);
+        robot.claw.setPosition(0.25);
+        robot.rightSlideMotor.setTargetPosition(conePosition2);
+        robot.leftSlideMotor.setTargetPosition(conePosition2);
+        robot.leftSlideMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        robot.rightSlideMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        robot.leftSlideMotor.setPower(1);
+        robot.rightSlideMotor.setPower(1);
 
         waitForStart();
 
@@ -248,10 +254,44 @@ public class teleop extends LinearOpMode {
             robot.claw.setPosition(0.5);
         }
 
-        if (gamepad1.y)
+        if (gamepad1.right_stick_button)
         {
             int slideJunctionTarget;
-            slideJunctionTarget = higherConePosition;
+            slideJunctionTarget = neutralPosition;
+            robot.leftSlideMotor.setTargetPosition(slideJunctionTarget);
+            robot.rightSlideMotor.setTargetPosition(slideJunctionTarget);
+            robot.claw.setPosition(0.25);
+            robot.leftSlideMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            robot.rightSlideMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            robot.leftSlideMotor.setPower(0.75);
+            robot.rightSlideMotor.setPower(0.75);
+            while (robot.leftSlideMotor.isBusy() && robot.rightSlideMotor.isBusy())
+            {
+
+                joystick1LeftX = gamepad1.left_stick_x;
+                joystick1LeftY = gamepad1.left_stick_y;
+                joystick1RightX = gamepad1.right_stick_x;
+
+                flMotorPower = joystick1LeftY - joystick1LeftX - joystick1RightX;
+                frMotorPower = joystick1LeftY + joystick1LeftX + joystick1RightX;
+                brMotorPower = joystick1LeftY - joystick1LeftX + joystick1RightX;
+                blMotorPower = joystick1LeftY + joystick1LeftX - joystick1RightX;
+
+                robot.frontLeft.setPower(flMotorPower * 0.35);
+                robot.frontRight.setPower(frMotorPower * 0.35);
+                robot.rearRight.setPower(brMotorPower * 0.35);
+                robot.rearLeft.setPower(blMotorPower * 0.35);
+            }
+            robot.leftSlideMotor.setPower(0);
+            robot.rightSlideMotor.setPower(0);
+            robot.leftSlideMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            robot.rightSlideMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        }
+
+        if (gamepad1.x)
+        {
+            int slideJunctionTarget;
+            slideJunctionTarget = conePosition5;
             robot.leftSlideMotor.setTargetPosition(slideJunctionTarget);
             robot.rightSlideMotor.setTargetPosition(slideJunctionTarget);
             robot.leftSlideMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
@@ -280,10 +320,74 @@ public class teleop extends LinearOpMode {
             robot.rightSlideMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         }
 
-        if (gamepad1.x)
+        if (gamepad1.y)
         {
             int slideJunctionTarget;
-            slideJunctionTarget = lowerConePosition;
+            slideJunctionTarget = conePosition4;
+            robot.leftSlideMotor.setTargetPosition(slideJunctionTarget);
+            robot.rightSlideMotor.setTargetPosition(slideJunctionTarget);
+            robot.leftSlideMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            robot.rightSlideMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            robot.leftSlideMotor.setPower(1);
+            robot.rightSlideMotor.setPower(1);
+            while (robot.leftSlideMotor.isBusy() && robot.rightSlideMotor.isBusy())
+            {
+                joystick1LeftX = gamepad1.left_stick_x;
+                joystick1LeftY = gamepad1.left_stick_y;
+                joystick1RightX = gamepad1.right_stick_x;
+
+                flMotorPower = joystick1LeftY - joystick1LeftX - joystick1RightX;
+                frMotorPower = joystick1LeftY + joystick1LeftX + joystick1RightX;
+                brMotorPower = joystick1LeftY - joystick1LeftX + joystick1RightX;
+                blMotorPower = joystick1LeftY + joystick1LeftX - joystick1RightX;
+
+                robot.frontLeft.setPower(flMotorPower * 0.35);
+                robot.frontRight.setPower(frMotorPower * 0.35);
+                robot.rearRight.setPower(brMotorPower * 0.35);
+                robot.rearLeft.setPower(blMotorPower * 0.35);
+            }
+            robot.leftSlideMotor.setPower(0);
+            robot.rightSlideMotor.setPower(0);
+            robot.leftSlideMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            robot.rightSlideMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        }
+
+        if (gamepad1.b)
+        {
+            int slideJunctionTarget;
+            slideJunctionTarget = conePosition3;
+            robot.leftSlideMotor.setTargetPosition(slideJunctionTarget);
+            robot.rightSlideMotor.setTargetPosition(slideJunctionTarget);
+            robot.leftSlideMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            robot.rightSlideMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            robot.leftSlideMotor.setPower(1);
+            robot.rightSlideMotor.setPower(1);
+            while (robot.leftSlideMotor.isBusy() && robot.rightSlideMotor.isBusy())
+            {
+                joystick1LeftX = gamepad1.left_stick_x;
+                joystick1LeftY = gamepad1.left_stick_y;
+                joystick1RightX = gamepad1.right_stick_x;
+
+                flMotorPower = joystick1LeftY - joystick1LeftX - joystick1RightX;
+                frMotorPower = joystick1LeftY + joystick1LeftX + joystick1RightX;
+                brMotorPower = joystick1LeftY - joystick1LeftX + joystick1RightX;
+                blMotorPower = joystick1LeftY + joystick1LeftX - joystick1RightX;
+
+                robot.frontLeft.setPower(flMotorPower * 0.35);
+                robot.frontRight.setPower(frMotorPower * 0.35);
+                robot.rearRight.setPower(brMotorPower * 0.35);
+                robot.rearLeft.setPower(blMotorPower * 0.35);
+            }
+            robot.leftSlideMotor.setPower(0);
+            robot.rightSlideMotor.setPower(0);
+            robot.leftSlideMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            robot.rightSlideMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        }
+
+        if (gamepad1.a)
+        {
+            int slideJunctionTarget;
+            slideJunctionTarget = conePosition2;
             robot.leftSlideMotor.setTargetPosition(slideJunctionTarget);
             robot.rightSlideMotor.setTargetPosition(slideJunctionTarget);
             robot.leftSlideMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);

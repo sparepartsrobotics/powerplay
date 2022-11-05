@@ -89,6 +89,9 @@ public class auto extends LinearOpMode {
     static final double DRIVE_SPEED = 0.4;
     static final double degree_mult = 0.192;
 
+    int autoPosition = 50;
+    int neutralPosition = 0;
+
     /*
      * IMPORTANT: You need to obtain your own license key to use Vuforia. The string below with which
      * 'parameters.vuforiaLicenseKey' is initialized is for illustration only, and will not function.
@@ -138,6 +141,16 @@ public class auto extends LinearOpMode {
             tfod.setZoom(1.0, 16.0 / 9.0);
         }
         robot = new Robot(hardwareMap);
+
+        robot.claw.setPosition(0.25);
+        sleep(500);
+        robot.rightSlideMotor.setTargetPosition(autoPosition);
+        robot.leftSlideMotor.setTargetPosition(autoPosition);
+        robot.leftSlideMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        robot.rightSlideMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        robot.leftSlideMotor.setPower(1);
+        robot.rightSlideMotor.setPower(1);
+
         robot.rearRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         robot.frontLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         robot.frontRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
@@ -177,10 +190,22 @@ public class auto extends LinearOpMode {
                                 strafeLeft(DRIVE_SPEED, 30, 15);
                                 sleep(500);
                                 forward(DRIVE_SPEED, 30, 15);
+                                robot.rightSlideMotor.setTargetPosition(neutralPosition);
+                                robot.leftSlideMotor.setTargetPosition(neutralPosition);
+                                robot.leftSlideMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                                robot.rightSlideMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                                robot.leftSlideMotor.setPower(1);
+                                robot.rightSlideMotor.setPower(1);
                                 break;
                             } if (recognition.getLabel().equals("2 Bulb")) {
                                 tfod.deactivate();
                                 forward(DRIVE_SPEED, 30, 15);
+                                robot.rightSlideMotor.setTargetPosition(neutralPosition);
+                                robot.leftSlideMotor.setTargetPosition(neutralPosition);
+                                robot.leftSlideMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                                robot.rightSlideMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                                robot.leftSlideMotor.setPower(1);
+                                robot.rightSlideMotor.setPower(1);
                                 break;
                             } if (recognition.getLabel().equals("3 Panel")) {
                                 tfod.deactivate();
@@ -188,6 +213,12 @@ public class auto extends LinearOpMode {
                                 strafeRight(DRIVE_SPEED, 30, 15);
                                 sleep(500);
                                 forward(DRIVE_SPEED, 30, 15);
+                                robot.rightSlideMotor.setTargetPosition(neutralPosition);
+                                robot.leftSlideMotor.setTargetPosition(neutralPosition);
+                                robot.leftSlideMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                                robot.rightSlideMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                                robot.leftSlideMotor.setPower(1);
+                                robot.rightSlideMotor.setPower(1);
                                 break;
                             } else {
                                 isBulbDetected = false;
