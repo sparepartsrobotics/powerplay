@@ -84,13 +84,13 @@ public class auto extends LinearOpMode {
     static final double COUNTS_PER_MOTOR_REV = 28.0;    // Started at 28.0 -- eg: AndyMark NeverRest40 Motor Encoder
     static final double DRIVE_GEAR_REDUCTION = 13.7;     // Started at 40.0 -- This is < 1.0 if geared UP
     static final double WHEEL_DIAMETER_INCHES = 4.0;     // For figuring circumference
-    static final double COUNTS_PER_INCH = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION) /
-            (WHEEL_DIAMETER_INCHES * 3.1415);
+    static final double COUNTS_PER_INCH = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION) / (WHEEL_DIAMETER_INCHES * 3.1415);
     static final double DRIVE_SPEED = 0.4;
     static final double degree_mult = 0.192;
 
     int autoPosition = 50;
     int neutralPosition = 0;
+    int highJunction = 775;
 
     /*
      * IMPORTANT: You need to obtain your own license key to use Vuforia. The string below with which
@@ -187,15 +187,29 @@ public class auto extends LinearOpMode {
                             if (recognition.getLabel().equals("1 Bolt")) {
                                 tfod.deactivate();
                                 forward(DRIVE_SPEED,3,15);
-                                strafeLeft(DRIVE_SPEED, 30, 15);
+                                strafeRight(DRIVE_SPEED, 27, 15);
                                 sleep(500);
                                 forward(DRIVE_SPEED, 30, 15);
+                                right(0.5, 45, 15);
+                                forward(DRIVE_SPEED, 3, 15);
+                                robot.rightSlideMotor.setTargetPosition(highJunction);
+                                robot.leftSlideMotor.setTargetPosition(highJunction);
+                                robot.leftSlideMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                                robot.rightSlideMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                                robot.leftSlideMotor.setPower(1);
+                                robot.rightSlideMotor.setPower(1);
+                                sleep(100);
+                                robot.claw.setPosition(0.5);
+                                backward(DRIVE_SPEED, 6, 15);
                                 robot.rightSlideMotor.setTargetPosition(neutralPosition);
                                 robot.leftSlideMotor.setTargetPosition(neutralPosition);
                                 robot.leftSlideMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                                 robot.rightSlideMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                                 robot.leftSlideMotor.setPower(1);
                                 robot.rightSlideMotor.setPower(1);
+                                robot.claw.setPosition(0.25);
+                                right(0.5, 45, 15);
+                                backward(DRIVE_SPEED, 48,15);
                                 break;
                             } if (recognition.getLabel().equals("2 Bulb")) {
                                 tfod.deactivate();

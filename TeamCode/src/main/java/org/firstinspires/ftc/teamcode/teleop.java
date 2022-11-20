@@ -21,7 +21,7 @@ public class teleop extends LinearOpMode {
     double joystick1RightX;
     double joystick1LeftY;
 
-    int highJunction = 775;
+    int highJunction = 2500;
     int mediumJunction = 550;
     int lowJunction = 350;
     int groundJunction = 100;
